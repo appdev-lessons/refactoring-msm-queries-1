@@ -232,7 +232,17 @@ class Person
   end
 end
 
+sd = Person.new
+sd.first_name = "Shreya"
+sd.last_name = "Donepudi"
 
+bp = Person.new
+bp.first_name = "Ben"
+bp.last_name = "Purinton"
+
+jw = Person.new
+jw.first_name = "Jelani"
+jw.last_name = "Woods"
 
 pp sd.full_name
 pp bp.full_name
