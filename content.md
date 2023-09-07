@@ -401,11 +401,11 @@ Please note that we could have called the method something else, if we wanted to
 
 Since it is returning an instance of the `Director` class, `.director` is a good name, I think; just like `.director_id` was a good name for the column/method that returned an `Integer`. Perhaps `.director_instance` or `.director_row` or `.director_record` might be more descriptive than `.director`? I could buy that argument (you know I love long and descriptive names), but `.director` is the convention in the Rails community when returning an ActiveRecord instance `Director`.
 
-In most projects, the choice of what you call your methods, view templates, and anything else internal to your codebase (and not user-facing) is entirely up to you. Since this is a refactoring project, though, and the point of it is to change internal implementation while holding user-facing functionality constant, `rails grade` will be checking to see that you defined a new method called `.director`; so name it that.
+In most projects, the choice of what you call your methods, view templates, and anything else internal to your codebase (and not user-facing) is entirely up to you. Since this is a refactoring project, though, and the point of it is to change internal implementation while holding user-facing functionality constant, `rake grade` will be checking to see that you defined a new method called `.director`; so name it that.
 
 ### Make it return the right thing
 
-Instead of just returning the string `"Hello!"`, let's make the method do it's job: look up the row in the directors table corresponding to the receiving movie's `director_id`, and return an instance of `Director`.
+Instead of just returning the string `"Hello!"`, let's make the method do its job: look up the row in the directors table corresponding to the receiving movie's `director_id`, and return an instance of `Director`.
 
 Let's do it step-by-step, and look at the value of `<%= @the_movie.director %>` in the details page of a movie at each step along the way:
 
@@ -414,6 +414,8 @@ Let's do it step-by-step, and look at the value of `<%= @the_movie.director %>` 
 Step 1 is to return the the receiving movie's `director_id`:
 
 ```ruby
+# app/models/movie.rb
+
 class Movie < ApplicationRecord
   def director
     my_director_id = self.director_id
@@ -434,6 +436,8 @@ Make sure you've got a value in the `director_id` column before moving on.
 Step 2 is to return an `ActiveRecord::Relation` containing records from the directors table that have the receiving movie's `director_id` in the director table's `id` column:
 
 ```ruby
+# app/models/movie.rb
+
 class Movie < ApplicationRecord
   def director
     my_director_id = self.director_id
@@ -447,7 +451,7 @@ end
 
 Now check out the return value of `<%= @the_movie.director %>` in the details page of a movie. Hopefully you should see an `ActiveRecord::Relation` containing 1 record.
 
-You might see an `ActiveRecord::Relation` containing 0 records. This could be because the director of the movie has been deleted, so the value in the movie's `director_id` column no longer corresponds to any record in the directors table. Or, it could be that when the movie was created, the value that was assigned to it's `director_id` attribute was never a valid ID for any director.
+You might see an `ActiveRecord::Relation` containing 0 records. This could be because the director of the movie has been deleted, so the value in the movie's `director_id` column no longer corresponds to any record in the directors table. Or, it could be that when the movie was created, the value that was assigned to its `director_id` attribute was never a valid ID for any director.
 
 For whatever reason, this movie now has an invalid `director_id` and is an orphan. You could either 1) use `rails console` or visit `/rails/db` to fix the problem by updating this movie's director_id attribute to a valid director's ID, or 2) you could visit a different movie details page to test with.
 
@@ -458,6 +462,8 @@ Make sure you've got a non-empty `ActiveRecord::Relation` before moving on.
 Step 3 is to return the `Director` itself!
 
 ```ruby
+# app/models/movie.rb
+
 class Movie < ApplicationRecord
   def director
     my_director_id = self.director_id
@@ -544,6 +550,8 @@ But we shouldn't have to worry about querying associations when writing our cont
 Let's define an instance method in the `Director` class called `.filmography` that returns an `ActiveRecord::Relation` of movie records that belong to the receiving director:
 
 ```ruby
+# app/models/director.rb
+
 class Director < ApplicationRecord
   def filmography
     my_id = self.id
@@ -659,8 +667,10 @@ A hundred times easier to write, read, and maintain!
 
 You shouldn't be worrying about writing that database query over and over and over and over again while you are writing your controllers and view templates.
 
-Or, more realistically, on a multi-person team, the people who are crafting the interface probably don't even know how write the database queries. Or it would be a huge waste of time and resources for them to do so.
+Or, more realistically, on a multi-person team, the people who are crafting the interface probably don't even know how to write the database queries. Or it would be a huge waste of time and resources for them to do so.
 
 We should always define instance methods in our models to encapsulate as much business logic as possible, to make it easy to re-use, easy to change, and easy to test.
 
-Our associations, as I've been stressing since Day 1, are among the most important domain knowledge there is, and so are among the first thing we should encapsulate in instance methods in our models.
+Our associations are among the most important domain knowledge there is, and so are among the first thing we should encapsulate in instance methods in our models.
+
+---
