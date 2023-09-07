@@ -220,7 +220,7 @@ pp sd.full_name
 ```
 {: .repl #say_my_name_3 title="Say my name, 3" points="1"}
 
-Let's define the method, to get one step closer to our goal:
+As expected, an error, because we haven't defined `full_name`. Let's define the method, to get one step closer to our goal:
 
 ```ruby
 class Person
@@ -231,15 +231,12 @@ class Person
     return "Shreya Donepudi"
   end
 end
-```
 
-Now, if we try again:
-
-```ruby
-pp sd.full_name # => "Shreya Donepudi"
-pp bp.full_name # => "Shreya Donepudi"
-pp jw.full_name # => "Shreya Donepudi"
+pp sd.full_name
+pp bp.full_name
+pp jw.full_name
 ```
+{: .repl #say_my_name_4 title="Say my name, 4" points="1"}
 
 Well, it's progress, I suppose. At least we resolved the `undefined method 'full_name' for #<Person:0x00007fe0c24a6eb0>` issue. But, we want each instance to use it's _own_ first name and last name attributes to put together it's full name. How can we author the `.full_name` method to do that?
 
