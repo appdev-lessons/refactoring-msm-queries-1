@@ -254,7 +254,7 @@ Well, it's progress, I suppose. At least we resolved the `undefined method 'full
 
 If we changed the definition of the method to the following:
 
-```ruby
+```ruby{6,8}
 class Person
   attr_accessor(:first_name)
   attr_accessor(:last_name)
