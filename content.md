@@ -174,17 +174,35 @@ jw.first_name = "Jelani"
 jw.last_name = "Woods"
 pp jw
 ```
-{: .repl #say_my_name title="Say my name" points="1"}
+{: .repl #say_my_name_1 title="Say my name, 1" points="1"}
 
 ### Using existing instance methods when defining new instance methods
 
 Now, what if we wanted to display each person's full name? We could do this:
 
 ```ruby
-pp sd.first_name + " " + sd.last_name # => "Shreya Donepudi"
-pp pm.first_name + " " + pm.last_name # => "Patrick McKernin"
-pp jw.first_name + " " + jw.last_name # => "Jelani Woods"
+class Person
+  attr_accessor(:first_name)
+  attr_accessor(:last_name)
+end
+
+sd = Person.new
+sd.first_name = "Shreya"
+sd.last_name = "Donepudi"
+
+bp = Person.new
+bp.first_name = "Ben"
+bp.last_name = "Purinton"
+
+jw = Person.new
+jw.first_name = "Jelani"
+jw.last_name = "Woods"
+
+pp sd.first_name + " " + sd.last_name
+pp bp.first_name + " " + bp.last_name
+pp jw.first_name + " " + jw.last_name
 ```
+{: .repl #say_my_name_2 title="Say my name, 2" points="1"}
 
 (I'm omitting the class definition for brevity; `class Person` is still defined above in my `experiment.rb`, as well as the lines of code where we created the three `Person` instances and assigned their attribute values.)
 
@@ -192,7 +210,7 @@ But wouldn't it be nice if we had a nicely named method we could call instead, l
 
 ```ruby
 pp sd.full_name # => undefined method `full_name' for #<Person:0x00007fe0c24a6eb0>
-pp pm.full_name # => undefined method `full_name' for #<Person:0x00007fe0c23f0a70>
+pp bp.full_name # => undefined method `full_name' for #<Person:0x00007fe0c23f0a70>
 pp jw.full_name # => undefined method `full_name' for #<Person:0x00007fe0802ca8b8>
 ```
 
@@ -213,7 +231,7 @@ Now, if we try again:
 
 ```ruby
 pp sd.full_name # => "Shreya Donepudi"
-pp pm.full_name # => "Shreya Donepudi"
+pp bp.full_name # => "Shreya Donepudi"
 pp jw.full_name # => "Shreya Donepudi"
 ```
 
@@ -227,7 +245,7 @@ class Person
   attr_accessor(:last_name)
 
   def full_name
-    assembled_name = pm.first_name + " " + pm.last_name
+    assembled_name = bp.first_name + " " + bp.last_name
     
     return assembled_name
   end
@@ -237,10 +255,10 @@ end
 Would it help? No, it wouldn't. Give it a try and see what the error message says.
 
 ```
-undefined local variable or method `pm' for #<Person:0x00007fe0c24a6eb0> (NameError)
+undefined local variable or method `bp' for #<Person:0x00007fe0c24a6eb0> (NameError)
 ```
 
-We can't use the `sd`, `pm`, or `jw` local variables when we _define_ the instance method. When we _author_ the method, we have no idea what the _invokers_ of the method are going to name their variables next month or next year when they _use_ the method, or whether they are going to create variables at all! Perhaps they are just going to chain this method on to the end of another method.
+We can't use the `sd`, `bp`, or `jw` local variables when we _define_ the instance method. When we _author_ the method, we have no idea what the _invokers_ of the method are going to name their variables next month or next year when they _use_ the method, or whether they are going to create variables at all! Perhaps they are just going to chain this method on to the end of another method.
 
 So, when we're authoring the `.full_name` method, we need some way to refer to whichever instance of the `Person` class the `.full_name` method is going to be called upon _in the future_. Ruby gives us a way: the `self` keyword.
 
@@ -271,7 +289,7 @@ Now, we can use it!
 
 ```ruby
 pp sd.full_name # => "Shreya Donepudi"
-pp pm.full_name # => "Patrick McKernin"
+pp bp.full_name # => "Ben Purinton"
 pp jw.full_name # => "Jelani Woods"
 ```
 
