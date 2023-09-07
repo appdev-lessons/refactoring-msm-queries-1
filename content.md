@@ -96,7 +96,7 @@ Unfortunately, if you embed `<%= @the_movie.director %>` in `app/views/movie_tem
 
 ### Naming the method
 
-If you feel very confident about [defining instance methods](https://learn.firstdraft.com/lessons/78-ruby-intro-our-own-classes#defining-instance-methods), then you can skip forward to the [Defining "association accessors"](#defining-association-accessors) section. Otherwise, read on.
+If you feel very confident about [defining instance methods](https://learn.firstdraft.com/lessons/78-ruby-intro-our-own-classes#defining-instance-methods), then you can skip forward to the [Defining "association accessors"](#defining-association-accessors){:target="_self"} section. Otherwise, read on.
 
 Recall that, in Ruby, we use the `def` keyword within the `class` definition to add new methods to a class. Here, we're adding the `say_hi` instance method within the definition of the `Person` class:
 
