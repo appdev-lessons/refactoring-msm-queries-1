@@ -377,14 +377,17 @@ Or, if we're okay with chaining a couple of methods on the same line, we could e
 <%= @the_movie.director.name %>
 ```
 
-If you embed `<%= @the_movie.director %>` in `app/views/movie_templates/show.html.erb` right now and visit the details page of a director, you'll get a big ol' `"undefined method 'director' for #<Movie:0x00007faadebb9e88>"` error. Let's define the instance method and make it work.
+Try to embed `<%= @the_movie.director %>` in `app/views/movie_templates/show.html.erb` right now. 
+
+Now, visit the details page of a director. You'll get a big ol' `"undefined method 'director' for #<Movie:0x00007faadebb9e88>"` error. Let's define the instance method and make it work.
 
 ### Define the method
 
 All of our model class definitions are located in the `app/models` folder. Find `movie.rb` and define a method called `director`:
 
-
 ```ruby
+# app/models/movie.rb
+
 class Movie < ApplicationRecord
   def director
     return "Hello!"
