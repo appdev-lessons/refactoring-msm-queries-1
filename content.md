@@ -1,6 +1,6 @@
-# Refactoring MSM Queries with Methods
+# Refactoring Must See Movies with Methods
 
-This chapter is the companion to [the refactoring-msm-queries-1 project](https://github.com/appdev-projects/refactoring-msm-queries-1), which is the sequel to the [the msm-queries project](https://github.com/appdev-projects/msm-queries).
+This lesson is the companion to [the refactoring-msm-queries-1 project](https://github.com/appdev-projects/refactoring-msm-queries-1), which is the sequel to the [the msm-queries project](https://github.com/appdev-projects/msm-queries).
 
 ## Objective
 
