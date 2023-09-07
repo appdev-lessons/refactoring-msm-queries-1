@@ -159,10 +159,10 @@ class Person
   attr_accessor(:last_name)
 end
 
-sd = Person.new
-sd.first_name = "Shreya"
-sd.last_name = "Donepudi"
-pp sd
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
+pp rb
 
 bp = Person.new
 bp.first_name = "Ben"
@@ -186,9 +186,9 @@ class Person
   attr_accessor(:last_name)
 end
 
-sd = Person.new
-sd.first_name = "Shreya"
-sd.last_name = "Donepudi"
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
 
 bp = Person.new
 bp.first_name = "Ben"
@@ -198,7 +198,7 @@ jw = Person.new
 jw.first_name = "Jelani"
 jw.last_name = "Woods"
 
-pp sd.first_name + " " + sd.last_name
+pp rb.first_name + " " + rb.last_name
 pp bp.first_name + " " + bp.last_name
 pp jw.first_name + " " + jw.last_name
 ```
@@ -212,11 +212,11 @@ class Person
   attr_accessor(:last_name)
 end
 
-sd = Person.new
-sd.first_name = "Shreya"
-sd.last_name = "Donepudi"
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
 
-pp sd.full_name
+pp rb.full_name
 ```
 {: .repl #say_my_name_3 title="Say my name, 3" points="1"}
 
@@ -228,13 +228,13 @@ class Person
   attr_accessor(:last_name)
 
   def full_name
-    return "Shreya Donepudi"
+    return "Raghu Betina"
   end
 end
 
-sd = Person.new
-sd.first_name = "Shreya"
-sd.last_name = "Donepudi"
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
 
 bp = Person.new
 bp.first_name = "Ben"
@@ -244,7 +244,7 @@ jw = Person.new
 jw.first_name = "Jelani"
 jw.last_name = "Woods"
 
-pp sd.full_name
+pp rb.full_name
 pp bp.full_name
 pp jw.full_name
 ```
@@ -273,7 +273,7 @@ Would it help? No, it wouldn't. Give it a try and see what the error message say
 undefined local variable or method `bp' for #<Person:0x00007fe0c24a6eb0> (NameError)
 ```
 
-We can't use the `sd`, `bp`, or `jw` local variables when we _define_ the instance method. When we _author_ the method, we have no idea what the _invokers_ of the method are going to name their variables next month or next year when they _use_ the method, or whether they are going to create variables at all! Perhaps they are just going to chain this method on to the end of another method.
+We can't use the `rb`, `bp`, or `jw` local variables when we _define_ the instance method. When we _author_ the method, we have no idea what the _invokers_ of the method are going to name their variables next month or next year when they _use_ the method, or whether they are going to create variables at all! Perhaps they are just going to chain this method on to the end of another method.
 
 So, when we're authoring the `.full_name` method, we need some way to refer to whichever instance of the `Person` class the `.full_name` method is going to be called upon _in the future_. Ruby gives us a way: the `self` keyword.
 
@@ -299,9 +299,9 @@ class Person
   end
 end
 
-sd = Person.new
-sd.first_name = "Shreya"
-sd.last_name = "Donepudi"
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
 
 bp = Person.new
 bp.first_name = "Ben"
@@ -311,7 +311,7 @@ jw = Person.new
 jw.first_name = "Jelani"
 jw.last_name = "Woods"
 
-pp sd.full_name
+pp rb.full_name
 pp bp.full_name
 pp jw.full_name
 ```
@@ -335,11 +335,11 @@ class Person
   end
 end
 
-sd = Person.new
-sd.first_name = "Shreya"
-sd.last_name = "Donepudi"
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
 
-pp sd.full_name_caps
+pp rb.full_name_caps
 ```
 {: .repl #say_my_name_caps title="Say my name, CAPS" points="1"}
 
