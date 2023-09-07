@@ -127,7 +127,7 @@ end
 
 p = Person.new
 hello = p.say_hi
-hello_upcase = x.upcase
+hello_upcase = hello.upcase
 
 pp hello
 pp hello_upcase
