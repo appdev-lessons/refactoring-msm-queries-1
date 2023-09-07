@@ -1,18 +1,20 @@
-# Refactoring MSM Queries with Methods
-
-This chapter is the companion to [the refactoring-msm-queries-1 project](https://github.com/appdev-projects/refactoring-msm-queries-1){:target="_blank"}, which is the sequel to the [the msm-queries project](https://github.com/appdev-projects/msm-queries){:target="_blank"}.
+# Refactoring Must See Movies with Methods
 
 ## Objective
 
-Our goal is to keep msm-queries working the same way that it was after we finished building it; we're not going to add much. Therefore, we'll use the same target as before:
+Our goal is to keep Must See Movies Queries (`msm-queries`) working the same way that it was after we finished building it; we're not going to add much. Therefore, we'll use the same target as before:
 
-[https://msm-queries.matchthetarget.com/](https://msm-queries.matchthetarget.com/){:target="_blank"}
+[https://msm-queries.matchthetarget.com/](https://msm-queries.matchthetarget.com/)
 
-Our starting point code for this project, refactoring-msm-1, is one possible solution for msm-queries. But we're going to make the code much more modular and re-usable, while keeping the functionality exactly the same. How? By **defining methods** to encapsulate our querying logic.
+The project can be loaded here:
 
-First, you should read through the starting point code and compare it to your own solution to msm-queries. `rails sample_data` and `bin/server` so that you can click through the application, verify that it's working, and read the server log.
+LTI{Load Refactoring MSM 1 assignment}(https://grades.firstdraft.com/launch)[S9ymPy6WCsn18gLbByVbZQ7k]{vfdtzJb5bLYqYwuqgeRKpc5d}(10)[Refactoring MSM 1 Project]
+
+Our starting point code for this project, `refactoring-msm-1`, is one possible solution for `msm-queries`. But we're going to make the code much more modular and re-usable, while keeping the functionality exactly the same. How? By **defining methods** to encapsulate our querying logic.
+
+First, you should read through the starting point code and compare it to your own solution to `msm-queries`. Be sure to `rake sample_data` and `bin/dev` so that you can click through the application, verify that it's working, and read the server log.
   
-Are there any differences between the starter code and your own solution to msm-queries? You will most likely find at least one or two differences. What are they doing? Practice _reading_ the code and reasoning your way through it, line by line; explain it to yourself, or to your rubber ducky. Developers read far more code than we write.
+Are there any differences between the starter code and your own solution to `msm-queries`? You will most likely find at least one or two differences. What are they doing? Practice _reading_ the code and reasoning your way through it, line by line; explain it to yourself, or to your rubber ducky. Developers read far more code than we write.
 
 Does any part of the code puzzle you?
 
@@ -25,9 +27,9 @@ Right now, there are several places in our application where we have a movie and
 For example, in `app/views/movie_templates/show.html.erb`, we have an instance of `Movie` in a variable called `@the_movie`, and we want to display the name of the director. So, first, we use the value in the attribute `@the_movie.director_id` to look up a matching record in the directors table:
 
 ```erb
-<% the_id = @the_movie.director_id >
+<% dir_id = @the_movie.director_id >
 
-<% matching_directors = Director.where({ :id => the_id }) %>
+<% matching_directors = Director.where({ :id => dir_id }) %>
     
 <% the_director = matching_directors.at(0) %>
 ```
@@ -94,7 +96,7 @@ Unfortunately, if you embed `<%= @the_movie.director %>` in `app/views/movie_tem
 
 ### Naming the method
 
-If you feel very confident about [defining instance methods](https://chapters.firstdraft.com/chapters/769#defining-instance-methods){:target="_blank"}, then you can skip forward to the [Defining "association accessors"](#defining-association-accessors) section. Otherwise, read on.
+If you feel very confident about [defining instance methods](https://learn.firstdraft.com/lessons/78-ruby-intro-our-own-classes#defining-instance-methods), then you can skip forward to the [Defining "association accessors"](#defining-association-accessors){:target="_self"} section. Otherwise, read on.
 
 Recall that, in Ruby, we use the `def` keyword within the `class` definition to add new methods to a class. Here, we're adding the `say_hi` instance method within the definition of the `Person` class:
 
@@ -106,20 +108,31 @@ class Person
 end
 ```
 
-Since the `say_hi` comes immediately after the `def` keyword[^class_method], Ruby knows we are defining an _instance-level_ method. 
+Since the `say_hi` comes immediately after the `def` keyword, Ruby knows we are defining an _instance-level_ method. 
 
-[^class_method]: If, instead of `def say_hi`, we had said `def Person.say_hi`, then we would have defined a _class-level_ method.
+<aside markdown="1">
+If, instead of `def say_hi`, we had said `def Person.say_hi`, then we would have defined a _class-level_ method.
+</aside>
 
 ### Returning a value
 
 Every method's main job is _returning_ a value, which is what it gets substituted by as the program is being evaluated. So, the above class would now work like this:
 
 ```ruby
-p = Person.new # create a new instance of Person
-x = p.say_hi # this expression is substituted by the return value "Hello!" and stored in x
-y = x.upcase # => y now contains the return value of upcase, "HELLO!"
-# etc
+class Person
+  def say_hi
+    return "Hello!"
+  end
+end
+
+p = Person.new
+hello = p.say_hi
+hello_upcase = hello.upcase
+
+pp hello
+pp hello_upcase
 ```
+{: .repl #say_hi title="Say hi" points="1"}
 
 Our programs are essentially just a long sequence of methods being called on the return values of previous methods, until we arrive at our desired output.
 
@@ -146,51 +159,68 @@ class Person
   attr_accessor(:last_name)
 end
 
-sd = Person.new
-sd.first_name = "Shreya"
-sd.last_name = "Donepudi"
-p sd # => #<Person:0x00007fe0c24a6eb0 @first_name="Shreya", @last_name="Donepudi">
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
+pp rb
 
-pm = Person.new
-pm.first_name = "Patrick"
-pm.last_name = "McKernin"
-p pm # => #<Person:0x00007fe0c23f0a70 @first_name="Patrick", @last_name="McKernin">
+bp = Person.new
+bp.first_name = "Ben"
+bp.last_name = "Purinton"
+pp bp
 
 jw = Person.new
 jw.first_name = "Jelani"
 jw.last_name = "Woods"
-p jw # => #<Person:0x00007fe0802ca8b8 @first_name="Jelani", @last_name="Woods">
+pp jw
 ```
-
-#### Doing rather than reading
-
-If you're feeling the urge to try out the Ruby that you're reading about — great!
-
-[Click here to create a blank Gitpod workspace](http://gitpod.io/#https://github.com/appdev-projects/helloruby){:target="_blank"}. Then, create a new file, type the Ruby you want to experiment with into it, and run it from a Terminal tab with `ruby YOUR_FILENAME`.
-
-For example, I created a file called `experiment.rb` and am running it with the Terminal command `ruby experiment.rb` to see my output. **Don't forget to turn on Autosave**, and to print your output with the `p` method — it's been a while, I know!
+{: .repl #say_my_name_1 title="Say my name, 1" points="1"}
 
 ### Using existing instance methods when defining new instance methods
 
 Now, what if we wanted to display each person's full name? We could do this:
 
 ```ruby
-p sd.first_name + " " + sd.last_name # => "Shreya Donepudi"
-p pm.first_name + " " + pm.last_name # => "Patrick McKernin"
-p jw.first_name + " " + jw.last_name # => "Jelani Woods"
-```
+class Person
+  attr_accessor(:first_name)
+  attr_accessor(:last_name)
+end
 
-(I'm omitting the class definition for brevity; `class Person` is still defined above in my `experiment.rb`, as well as the lines of code where we created the three `Person` instances and assigned their attribute values.)
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
+
+bp = Person.new
+bp.first_name = "Ben"
+bp.last_name = "Purinton"
+
+jw = Person.new
+jw.first_name = "Jelani"
+jw.last_name = "Woods"
+
+pp rb.first_name + " " + rb.last_name
+pp bp.first_name + " " + bp.last_name
+pp jw.first_name + " " + jw.last_name
+```
+{: .repl #say_my_name_2 title="Say my name, 2" points="1"}
 
 But wouldn't it be nice if we had a nicely named method we could call instead, like `.full_name`?
 
 ```ruby
-p sd.full_name # => undefined method `full_name' for #<Person:0x00007fe0c24a6eb0>
-p pm.full_name # => undefined method `full_name' for #<Person:0x00007fe0c23f0a70>
-p jw.full_name # => undefined method `full_name' for #<Person:0x00007fe0802ca8b8>
-```
+class Person
+  attr_accessor(:first_name)
+  attr_accessor(:last_name)
+end
 
-Let's define the method, to get one step closer to our goal:
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
+
+pp rb.full_name
+```
+{: .repl #say_my_name_3 title="Say my name, 3" points="1"}
+
+As expected, an error, because we haven't defined `full_name`. Let's define the method, to get one step closer to our goal:
 
 ```ruby
 class Person
@@ -198,18 +228,27 @@ class Person
   attr_accessor(:last_name)
 
   def full_name
-    return "Shreya Donepudi"
+    return "Raghu Betina"
   end
 end
-```
 
-Now, if we try again:
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
 
-```ruby
-p sd.full_name # => "Shreya Donepudi"
-p pm.full_name # => "Shreya Donepudi"
-p jw.full_name # => "Shreya Donepudi"
+bp = Person.new
+bp.first_name = "Ben"
+bp.last_name = "Purinton"
+
+jw = Person.new
+jw.first_name = "Jelani"
+jw.last_name = "Woods"
+
+pp rb.full_name
+pp bp.full_name
+pp jw.full_name
 ```
+{: .repl #say_my_name_4 title="Say my name, 4" points="1"}
 
 Well, it's progress, I suppose. At least we resolved the `undefined method 'full_name' for #<Person:0x00007fe0c24a6eb0>` issue. But, we want each instance to use it's _own_ first name and last name attributes to put together it's full name. How can we author the `.full_name` method to do that?
 
@@ -221,7 +260,7 @@ class Person
   attr_accessor(:last_name)
 
   def full_name
-    assembled_name = pm.first_name + " " + pm.last_name
+    assembled_name = bp.first_name + " " + bp.last_name
     
     return assembled_name
   end
@@ -231,10 +270,10 @@ end
 Would it help? No, it wouldn't. Give it a try and see what the error message says.
 
 ```
-undefined local variable or method `pm' for #<Person:0x00007fe0c24a6eb0> (NameError)
+undefined local variable or method `bp' for #<Person:0x00007fe0c24a6eb0> (NameError)
 ```
 
-We can't use the `sd`, `pm`, or `jw` local variables when we _define_ the instance method. When we _author_ the method, we have no idea what the _invokers_ of the method are going to name their variables next month or next year when they _use_ the method, or whether they are going to create variables at all! Perhaps they are just going to chain this method on to the end of another method.
+We can't use the `rb`, `bp`, or `jw` local variables when we _define_ the instance method. When we _author_ the method, we have no idea what the _invokers_ of the method are going to name their variables next month or next year when they _use_ the method, or whether they are going to create variables at all! Perhaps they are just going to chain this method on to the end of another method.
 
 So, when we're authoring the `.full_name` method, we need some way to refer to whichever instance of the `Person` class the `.full_name` method is going to be called upon _in the future_. Ruby gives us a way: the `self` keyword.
 
@@ -259,15 +298,24 @@ class Person
     return assembled_name
   end
 end
-```
 
-Now, we can use it!
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
 
-```ruby
-p sd.full_name # => "Shreya Donepudi"
-p pm.full_name # => "Patrick McKernin"
-p jw.full_name # => "Jelani Woods"
+bp = Person.new
+bp.first_name = "Ben"
+bp.last_name = "Purinton"
+
+jw = Person.new
+jw.first_name = "Jelani"
+jw.last_name = "Woods"
+
+pp rb.full_name
+pp bp.full_name
+pp jw.full_name
 ```
+{: .repl #say_my_name_5 title="Say my name, 5" points="1"}
 
 Yay! So handy. And, now that `.full_name` exists, we can use it along with `self` to build up other methods:
 
@@ -286,7 +334,14 @@ class Person
     return self.full_name.upcase
   end
 end
+
+rb = Person.new
+rb.first_name = "Raghu"
+rb.last_name = "Betina"
+
+pp rb.full_name_caps
 ```
+{: .repl #say_my_name_caps title="Say my name, CAPS" points="1"}
 
 And so on, and so forth.
 
@@ -322,14 +377,17 @@ Or, if we're okay with chaining a couple of methods on the same line, we could e
 <%= @the_movie.director.name %>
 ```
 
-If you embed `<%= @the_movie.director %>` in `app/views/movie_templates/show.html.erb` right now and visit the details page of a director, you'll get a big ol' `"undefined method 'director' for #<Movie:0x00007faadebb9e88>"` error. Let's define the instance method and make it work.
+Try to embed `<%= @the_movie.director %>` in `app/views/movie_templates/show.html.erb` right now. 
+
+Now, visit the details page of a director. You'll get a big ol' `"undefined method 'director' for #<Movie:0x00007faadebb9e88>"` error. Let's define the instance method and make it work.
 
 ### Define the method
 
 All of our model class definitions are located in the `app/models` folder. Find `movie.rb` and define a method called `director`:
 
-
 ```ruby
+# app/models/movie.rb
+
 class Movie < ApplicationRecord
   def director
     return "Hello!"
@@ -343,11 +401,11 @@ Please note that we could have called the method something else, if we wanted to
 
 Since it is returning an instance of the `Director` class, `.director` is a good name, I think; just like `.director_id` was a good name for the column/method that returned an `Integer`. Perhaps `.director_instance` or `.director_row` or `.director_record` might be more descriptive than `.director`? I could buy that argument (you know I love long and descriptive names), but `.director` is the convention in the Rails community when returning an ActiveRecord instance `Director`.
 
-In most projects, the choice of what you call your methods, view templates, and anything else internal to your codebase (and not user-facing) is entirely up to you. Since this is a refactoring project, though, and the point of it is to change internal implementation while holding user-facing functionality constant, `rails grade` will be checking to see that you defined a new method called `.director`; so name it that.
+In most projects, the choice of what you call your methods, view templates, and anything else internal to your codebase (and not user-facing) is entirely up to you. Since this is a refactoring project, though, and the point of it is to change internal implementation while holding user-facing functionality constant, `rake grade` will be checking to see that you defined a new method called `.director`; so name it that.
 
 ### Make it return the right thing
 
-Instead of just returning the string `"Hello!"`, let's make the method do it's job: look up the row in the directors table corresponding to the receiving movie's `director_id`, and return an instance of `Director`.
+Instead of just returning the string `"Hello!"`, let's make the method do its job: look up the row in the directors table corresponding to the receiving movie's `director_id`, and return an instance of `Director`.
 
 Let's do it step-by-step, and look at the value of `<%= @the_movie.director %>` in the details page of a movie at each step along the way:
 
@@ -356,6 +414,8 @@ Let's do it step-by-step, and look at the value of `<%= @the_movie.director %>` 
 Step 1 is to return the the receiving movie's `director_id`:
 
 ```ruby
+# app/models/movie.rb
+
 class Movie < ApplicationRecord
   def director
     my_director_id = self.director_id
@@ -376,6 +436,8 @@ Make sure you've got a value in the `director_id` column before moving on.
 Step 2 is to return an `ActiveRecord::Relation` containing records from the directors table that have the receiving movie's `director_id` in the director table's `id` column:
 
 ```ruby
+# app/models/movie.rb
+
 class Movie < ApplicationRecord
   def director
     my_director_id = self.director_id
@@ -389,7 +451,7 @@ end
 
 Now check out the return value of `<%= @the_movie.director %>` in the details page of a movie. Hopefully you should see an `ActiveRecord::Relation` containing 1 record.
 
-You might see an `ActiveRecord::Relation` containing 0 records. This could be because the director of the movie has been deleted, so the value in the movie's `director_id` column no longer corresponds to any record in the directors table. Or, it could be that when the movie was created, the value that was assigned to it's `director_id` attribute was never a valid ID for any director.
+You might see an `ActiveRecord::Relation` containing 0 records. This could be because the director of the movie has been deleted, so the value in the movie's `director_id` column no longer corresponds to any record in the directors table. Or, it could be that when the movie was created, the value that was assigned to its `director_id` attribute was never a valid ID for any director.
 
 For whatever reason, this movie now has an invalid `director_id` and is an orphan. You could either 1) use `rails console` or visit `/rails/db` to fix the problem by updating this movie's director_id attribute to a valid director's ID, or 2) you could visit a different movie details page to test with.
 
@@ -400,6 +462,8 @@ Make sure you've got a non-empty `ActiveRecord::Relation` before moving on.
 Step 3 is to return the `Director` itself!
 
 ```ruby
+# app/models/movie.rb
+
 class Movie < ApplicationRecord
   def director
     my_director_id = self.director_id
@@ -486,6 +550,8 @@ But we shouldn't have to worry about querying associations when writing our cont
 Let's define an instance method in the `Director` class called `.filmography` that returns an `ActiveRecord::Relation` of movie records that belong to the receiving director:
 
 ```ruby
+# app/models/director.rb
+
 class Director < ApplicationRecord
   def filmography
     my_id = self.id
@@ -601,8 +667,10 @@ A hundred times easier to write, read, and maintain!
 
 You shouldn't be worrying about writing that database query over and over and over and over again while you are writing your controllers and view templates.
 
-Or, more realistically, on a multi-person team, the people who are crafting the interface probably don't even know how write the database queries. Or it would be a huge waste of time and resources for them to do so.
+Or, more realistically, on a multi-person team, the people who are crafting the interface probably don't even know how to write the database queries. Or it would be a huge waste of time and resources for them to do so.
 
 We should always define instance methods in our models to encapsulate as much business logic as possible, to make it easy to re-use, easy to change, and easy to test.
 
-Our associations, as I've been stressing since Day 1, are among the most important domain knowledge there is, and so are among the first thing we should encapsulate in instance methods in our models.
+Our associations are among the most important domain knowledge there is, and so are among the first thing we should encapsulate in instance methods in our models.
+
+---
