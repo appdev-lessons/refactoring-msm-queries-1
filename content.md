@@ -27,7 +27,7 @@ Right now, there are several places in our application where we have a movie and
 For example, in `app/views/movie_templates/show.html.erb`, we have an instance of `Movie` in a variable called `@the_movie`, and we want to display the name of the director. So, first, we use the value in the attribute `@the_movie.director_id` to look up a matching record in the directors table:
 
 ```erb
-<% dir_id = @the_movie.director_id >
+<% dir_id = @the_movie.director_id %>
 
 <% matching_directors = Director.where({ :id => dir_id }) %>
     
