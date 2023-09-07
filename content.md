@@ -298,15 +298,24 @@ class Person
     return assembled_name
   end
 end
-```
 
-Now, we can use it!
+sd = Person.new
+sd.first_name = "Shreya"
+sd.last_name = "Donepudi"
 
-```ruby
-pp sd.full_name # => "Shreya Donepudi"
-pp bp.full_name # => "Ben Purinton"
-pp jw.full_name # => "Jelani Woods"
+bp = Person.new
+bp.first_name = "Ben"
+bp.last_name = "Purinton"
+
+jw = Person.new
+jw.first_name = "Jelani"
+jw.last_name = "Woods"
+
+pp sd.full_name
+pp bp.full_name
+pp jw.full_name
 ```
+{: .repl #say_my_name_5 title="Say my name, 5" points="1"}
 
 Yay! So handy. And, now that `.full_name` exists, we can use it along with `self` to build up other methods:
 
@@ -325,7 +334,14 @@ class Person
     return self.full_name.upcase
   end
 end
+
+sd = Person.new
+sd.first_name = "Shreya"
+sd.last_name = "Donepudi"
+
+pp sd.full_name_caps
 ```
+{: .repl #say_my_name_caps title="Say my name, CAPS" points="1"}
 
 And so on, and so forth.
 
