@@ -162,18 +162,19 @@ end
 sd = Person.new
 sd.first_name = "Shreya"
 sd.last_name = "Donepudi"
-pp sd # => #<Person:0x00007fe0c24a6eb0 @first_name="Shreya", @last_name="Donepudi">
+pp sd
 
 pm = Person.new
-pm.first_name = "Patrick"
-pm.last_name = "McKernin"
-pp pm # => #<Person:0x00007fe0c23f0a70 @first_name="Patrick", @last_name="McKernin">
+pm.first_name = "Ben"
+pm.last_name = "Purinton"
+pp pm
 
 jw = Person.new
 jw.first_name = "Jelani"
 jw.last_name = "Woods"
-pp jw # => #<Person:0x00007fe0802ca8b8 @first_name="Jelani", @last_name="Woods">
+pp jw
 ```
+{: .repl #say_my_name title="Say my name" points="1"}
 
 #### Doing rather than reading
 
