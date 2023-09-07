@@ -2,7 +2,7 @@
 
 ## Objective
 
-Our goal is to keep Must See Movies Queries working the same way that it was after we finished building it; we're not going to add much. Therefore, we'll use the same target as before:
+Our goal is to keep Must See Movies Queries (`msm-queries`) working the same way that it was after we finished building it; we're not going to add much. Therefore, we'll use the same target as before:
 
 [https://msm-queries.matchthetarget.com/](https://msm-queries.matchthetarget.com/)
 
@@ -10,11 +10,11 @@ The project can be loaded here:
 
 LTI{Load Refactoring MSM 1 assignment}(https://grades.firstdraft.com/launch)[S9ymPy6WCsn18gLbByVbZQ7k]{vfdtzJb5bLYqYwuqgeRKpc5d}(10)[Refactoring MSM 1 Project]
 
-Our starting point code for this project, refactoring-msm-1, is one possible solution for msm-queries. But we're going to make the code much more modular and re-usable, while keeping the functionality exactly the same. How? By **defining methods** to encapsulate our querying logic.
+Our starting point code for this project, `refactoring-msm-1`, is one possible solution for `msm-queries`. But we're going to make the code much more modular and re-usable, while keeping the functionality exactly the same. How? By **defining methods** to encapsulate our querying logic.
 
-First, you should read through the starting point code and compare it to your own solution to msm-queries. `rake sample_data` and `bin/dev` so that you can click through the application, verify that it's working, and read the server log.
+First, you should read through the starting point code and compare it to your own solution to `msm-queries`. Be sure to `rake sample_data` and `bin/dev` so that you can click through the application, verify that it's working, and read the server log.
   
-Are there any differences between the starter code and your own solution to msm-queries? You will most likely find at least one or two differences. What are they doing? Practice _reading_ the code and reasoning your way through it, line by line; explain it to yourself, or to your rubber ducky. Developers read far more code than we write.
+Are there any differences between the starter code and your own solution to `msm-queries`? You will most likely find at least one or two differences. What are they doing? Practice _reading_ the code and reasoning your way through it, line by line; explain it to yourself, or to your rubber ducky. Developers read far more code than we write.
 
 Does any part of the code puzzle you?
 
