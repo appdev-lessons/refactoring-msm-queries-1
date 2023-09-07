@@ -1,12 +1,14 @@
 # Refactoring Must See Movies with Methods
 
-This lesson is the companion to [the refactoring-msm-queries-1 project](https://github.com/appdev-projects/refactoring-msm-queries-1), which is the sequel to the [the msm-queries project](https://github.com/appdev-projects/msm-queries).
-
 ## Objective
 
-Our goal is to keep msm-queries working the same way that it was after we finished building it; we're not going to add much. Therefore, we'll use the same target as before:
+Our goal is to keep Must See Movies Queries working the same way that it was after we finished building it; we're not going to add much. Therefore, we'll use the same target as before:
 
 [https://msm-queries.matchthetarget.com/](https://msm-queries.matchthetarget.com/)
+
+The project can be loaded here:
+
+LTI{Load Refactoring MSM 1 assignment}(https://grades.firstdraft.com/launch)[S9ymPy6WCsn18gLbByVbZQ7k]{vfdtzJb5bLYqYwuqgeRKpc5d}(10)[Refactoring MSM 1 Project]
 
 Our starting point code for this project, refactoring-msm-1, is one possible solution for msm-queries. But we're going to make the code much more modular and re-usable, while keeping the functionality exactly the same. How? By **defining methods** to encapsulate our querying logic.
 
