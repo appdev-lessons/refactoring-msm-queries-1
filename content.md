@@ -27,9 +27,9 @@ Right now, there are several places in our application where we have a movie and
 For example, in `app/views/movie_templates/show.html.erb`, we have an instance of `Movie` in a variable called `@the_movie`, and we want to display the name of the director. So, first, we use the value in the attribute `@the_movie.director_id` to look up a matching record in the directors table:
 
 ```erb
-<% the_id = @the_movie.director_id >
+<% dir_id = @the_movie.director_id >
 
-<% matching_directors = Director.where({ :id => the_id }) %>
+<% matching_directors = Director.where({ :id => dir_id }) %>
     
 <% the_director = matching_directors.at(0) %>
 ```
@@ -96,7 +96,7 @@ Unfortunately, if you embed `<%= @the_movie.director %>` in `app/views/movie_tem
 
 ### Naming the method
 
-If you feel very confident about [defining instance methods](https://chapters.firstdraft.com/chapters/769#defining-instance-methods), then you can skip forward to the [Defining "association accessors"](#defining-association-accessors) section. Otherwise, read on.
+If you feel very confident about [defining instance methods](https://learn.firstdraft.com/lessons/78-ruby-intro-our-own-classes#defining-instance-methods), then you can skip forward to the [Defining "association accessors"](#defining-association-accessors) section. Otherwise, read on.
 
 Recall that, in Ruby, we use the `def` keyword within the `class` definition to add new methods to a class. Here, we're adding the `say_hi` instance method within the definition of the `Person` class:
 
