@@ -204,15 +204,21 @@ pp jw.first_name + " " + jw.last_name
 ```
 {: .repl #say_my_name_2 title="Say my name, 2" points="1"}
 
-(I'm omitting the class definition for brevity; `class Person` is still defined above in my `experiment.rb`, as well as the lines of code where we created the three `Person` instances and assigned their attribute values.)
-
 But wouldn't it be nice if we had a nicely named method we could call instead, like `.full_name`?
 
 ```ruby
-pp sd.full_name # => undefined method `full_name' for #<Person:0x00007fe0c24a6eb0>
-pp bp.full_name # => undefined method `full_name' for #<Person:0x00007fe0c23f0a70>
-pp jw.full_name # => undefined method `full_name' for #<Person:0x00007fe0802ca8b8>
+class Person
+  attr_accessor(:first_name)
+  attr_accessor(:last_name)
+end
+
+sd = Person.new
+sd.first_name = "Shreya"
+sd.last_name = "Donepudi"
+
+pp sd.full_name
 ```
+{: .repl #say_my_name_3 title="Say my name, 3" points="1"}
 
 Let's define the method, to get one step closer to our goal:
 
