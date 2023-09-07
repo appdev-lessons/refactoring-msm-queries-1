@@ -132,7 +132,7 @@ hello_upcase = x.upcase
 pp hello
 pp hello_upcase
 ```
-{: .repl #say_hi title="Say hi"}
+{: .repl #say_hi title="Say hi" points="1"}
 
 Our programs are essentially just a long sequence of methods being called on the return values of previous methods, until we arrive at our desired output.
 
