@@ -106,9 +106,11 @@ class Person
 end
 ```
 
-Since the `say_hi` comes immediately after the `def` keyword[^class_method], Ruby knows we are defining an _instance-level_ method. 
+Since the `say_hi` comes immediately after the `def` keyword, Ruby knows we are defining an _instance-level_ method. 
 
-[^class_method]: If, instead of `def say_hi`, we had said `def Person.say_hi`, then we would have defined a _class-level_ method.
+<aside markdown="1">
+If, instead of `def say_hi`, we had said `def Person.say_hi`, then we would have defined a _class-level_ method.
+</aside>
 
 ### Returning a value
 
@@ -149,17 +151,17 @@ end
 sd = Person.new
 sd.first_name = "Shreya"
 sd.last_name = "Donepudi"
-p sd # => #<Person:0x00007fe0c24a6eb0 @first_name="Shreya", @last_name="Donepudi">
+pp sd # => #<Person:0x00007fe0c24a6eb0 @first_name="Shreya", @last_name="Donepudi">
 
 pm = Person.new
 pm.first_name = "Patrick"
 pm.last_name = "McKernin"
-p pm # => #<Person:0x00007fe0c23f0a70 @first_name="Patrick", @last_name="McKernin">
+pp pm # => #<Person:0x00007fe0c23f0a70 @first_name="Patrick", @last_name="McKernin">
 
 jw = Person.new
 jw.first_name = "Jelani"
 jw.last_name = "Woods"
-p jw # => #<Person:0x00007fe0802ca8b8 @first_name="Jelani", @last_name="Woods">
+pp jw # => #<Person:0x00007fe0802ca8b8 @first_name="Jelani", @last_name="Woods">
 ```
 
 #### Doing rather than reading
@@ -175,9 +177,9 @@ For example, I created a file called `experiment.rb` and am running it with the 
 Now, what if we wanted to display each person's full name? We could do this:
 
 ```ruby
-p sd.first_name + " " + sd.last_name # => "Shreya Donepudi"
-p pm.first_name + " " + pm.last_name # => "Patrick McKernin"
-p jw.first_name + " " + jw.last_name # => "Jelani Woods"
+pp sd.first_name + " " + sd.last_name # => "Shreya Donepudi"
+pp pm.first_name + " " + pm.last_name # => "Patrick McKernin"
+pp jw.first_name + " " + jw.last_name # => "Jelani Woods"
 ```
 
 (I'm omitting the class definition for brevity; `class Person` is still defined above in my `experiment.rb`, as well as the lines of code where we created the three `Person` instances and assigned their attribute values.)
@@ -185,9 +187,9 @@ p jw.first_name + " " + jw.last_name # => "Jelani Woods"
 But wouldn't it be nice if we had a nicely named method we could call instead, like `.full_name`?
 
 ```ruby
-p sd.full_name # => undefined method `full_name' for #<Person:0x00007fe0c24a6eb0>
-p pm.full_name # => undefined method `full_name' for #<Person:0x00007fe0c23f0a70>
-p jw.full_name # => undefined method `full_name' for #<Person:0x00007fe0802ca8b8>
+pp sd.full_name # => undefined method `full_name' for #<Person:0x00007fe0c24a6eb0>
+pp pm.full_name # => undefined method `full_name' for #<Person:0x00007fe0c23f0a70>
+pp jw.full_name # => undefined method `full_name' for #<Person:0x00007fe0802ca8b8>
 ```
 
 Let's define the method, to get one step closer to our goal:
@@ -206,9 +208,9 @@ end
 Now, if we try again:
 
 ```ruby
-p sd.full_name # => "Shreya Donepudi"
-p pm.full_name # => "Shreya Donepudi"
-p jw.full_name # => "Shreya Donepudi"
+pp sd.full_name # => "Shreya Donepudi"
+pp pm.full_name # => "Shreya Donepudi"
+pp jw.full_name # => "Shreya Donepudi"
 ```
 
 Well, it's progress, I suppose. At least we resolved the `undefined method 'full_name' for #<Person:0x00007fe0c24a6eb0>` issue. But, we want each instance to use it's _own_ first name and last name attributes to put together it's full name. How can we author the `.full_name` method to do that?
@@ -264,9 +266,9 @@ end
 Now, we can use it!
 
 ```ruby
-p sd.full_name # => "Shreya Donepudi"
-p pm.full_name # => "Patrick McKernin"
-p jw.full_name # => "Jelani Woods"
+pp sd.full_name # => "Shreya Donepudi"
+pp pm.full_name # => "Patrick McKernin"
+pp jw.full_name # => "Jelani Woods"
 ```
 
 Yay! So handy. And, now that `.full_name` exists, we can use it along with `self` to build up other methods:
