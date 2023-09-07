@@ -119,11 +119,20 @@ If, instead of `def say_hi`, we had said `def Person.say_hi`, then we would have
 Every method's main job is _returning_ a value, which is what it gets substituted by as the program is being evaluated. So, the above class would now work like this:
 
 ```ruby
-p = Person.new # create a new instance of Person
-x = p.say_hi # this expression is substituted by the return value "Hello!" and stored in x
-y = x.upcase # => y now contains the return value of upcase, "HELLO!"
-# etc
+class Person
+  def say_hi
+    return "Hello!"
+  end
+end
+
+p = Person.new
+hello = p.say_hi
+hello_upcase = x.upcase
+
+pp hello
+pp hello_upcase
 ```
+{: .repl #say_hi title="Say hi"}
 
 Our programs are essentially just a long sequence of methods being called on the return values of previous methods, until we arrive at our desired output.
 
