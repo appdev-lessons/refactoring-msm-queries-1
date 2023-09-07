@@ -164,10 +164,10 @@ sd.first_name = "Shreya"
 sd.last_name = "Donepudi"
 pp sd
 
-pm = Person.new
-pm.first_name = "Ben"
-pm.last_name = "Purinton"
-pp pm
+bp = Person.new
+bp.first_name = "Ben"
+bp.last_name = "Purinton"
+pp bp
 
 jw = Person.new
 jw.first_name = "Jelani"
@@ -175,14 +175,6 @@ jw.last_name = "Woods"
 pp jw
 ```
 {: .repl #say_my_name title="Say my name" points="1"}
-
-#### Doing rather than reading
-
-If you're feeling the urge to try out the Ruby that you're reading about — great!
-
-[Click here to create a blank Gitpod workspace](http://gitpod.io/#https://github.com/appdev-projects/helloruby). Then, create a new file, type the Ruby you want to experiment with into it, and run it from a Terminal tab with `ruby YOUR_FILENAME`.
-
-For example, I created a file called `experiment.rb` and am running it with the Terminal command `ruby experiment.rb` to see my output. **Don't forget to turn on Autosave**, and to print your output with the `p` method — it's been a while, I know!
 
 ### Using existing instance methods when defining new instance methods
 
